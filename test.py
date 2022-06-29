@@ -1,51 +1,34 @@
-from collections import deque
-from itertools import permutations
+import re
 
 
-def solution(n, weak, dist):
-    dist.sort(reverse=True)
-    queue = deque([, 0]])
-    while queue:
-        i= queue.popleft()
-        if len(i[0]) == 1:
-            return i[1]+1
-        if i[1] >= len(dist):
-            break
-        for idx, j in enumerate(i[0]):
-            if dist[i[1]] >= n:
-                return i[1]+1
-            if dist[i[1]] + j >= n:
-                tmp= binary_search(i[0], dist[i[1]] + j-n)
-                if tmp+1 == idx:
-                    return i[1]+1
-                # ? = [start:idx],i[0]+1
-                queue.append([i[0][tmp+1:idx], i[1]+1])
+def solution(user_id, banned_id):
+    answer = []
+    ban = [[] for _ in range(len(banned_id))]
+    for bidx, b in enumerate(banned_id):
+        tmp = '^'
+        for c in b:
+            if c == '*':
+                tmp += '[a-z0-9]'
             else:
-                tmp= binary_search(i[0], j+dist[i[1]])
-                if idx == 0 and tmp == len(i[0]):
-                    return i[1]+1
-                # ? = [:idx]+[start:],i[0]+1
-                queue.append([i[0][:idx]+i[0][min(tmp+1, len(i[0])):], i[1]+1])
-    return -1
+                tmp += c
+        tmp += '$'
+        det = re.compile(tmp)
+        for uidx, u in enumerate(user_id):
+            if det.match(u):
+                ban[bidx].append(uidx)
+    result = [set()]
+    for i in range(len(ban)):
+        tmp = []
+        for j in ban[i]:
+            for r in result[:]:
+                tmp.append(r | set([j]))
+        result = tmp
+    for r in result:
+        print(len(ban))
+        if r not in answer and len(r) == len(ban):
+            answer.append(r)
+    return answer
 
 
-def binary_search(L, v):
-    start= 0
-    end= len(L)-1
-    mid= (start+end)//2
-    if L[start] > v:
-        return start-1
-    if L[end] < v:
-        return end
-    while start+1 < end:
-        if L[mid] == v:
-            return mid
-        else:
-            if L[mid] > v:
-                end= mid
-            else:
-                start= mid
-        mid= (start+end)//2
-    if L[end] == v:
-        return end
-    return start
+print(solution(["frodo", "fradi", "crodo",
+      "abc123", "frodoc"], ["fr*d*", "abc1**"]))
