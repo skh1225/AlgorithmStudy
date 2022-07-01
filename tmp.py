@@ -1,1 +1,2 @@
-print(set([1]) | set([2]))
+A = 1
+print(-A)
