@@ -1,4 +1,1 @@
-if [1, 2] < [2, 1]:
-    print(True)
-else:
-    print(False)
+print(eval('{(100)-(200*300)-(500)}+{(20)}'))
