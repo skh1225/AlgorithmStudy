@@ -40,7 +40,6 @@ def solution(relation):
                     temp = []
                     for t in tmp:
                         for Info in info[c]:
-                            print(t, Info)
                             if len(t & Info) > 1:
                                 temp.append(t & Info)
                     tmp = temp
@@ -48,10 +47,4 @@ def solution(relation):
                     tmp = info[c]
             if len(temp) == 0:
                 memory.append(set(com))
-    print(info)
-    print(memory)
     return len(memory)
-
-
-print(solution([["100", "ryan", "music", "2"], ["200", "apeach", "math", "2"], ["300", "tube", "computer", "3"], [
-      "400", "con", "computer", "4"], ["500", "muzi", "music", "3"], ["600", "apeach", "music", "2"]]))
