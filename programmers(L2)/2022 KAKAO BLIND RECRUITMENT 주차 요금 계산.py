@@ -1,3 +1,6 @@
+import math
+
+
 def solution(fees, records):
     answer = []
     info = dict()
@@ -30,9 +33,5 @@ def calFee(time_diff, fees):
     if time_diff <= fees[0]:
         fee = fees[1]
     else:
-        fee = fees[1]+int((time_diff-fees[0])/fees[2])*fees[3]
+        fee = fees[1]+math.ceil((time_diff-fees[0])/fees[2])*fees[3]
     return fee
-
-
-print(solution([180, 5000, 10, 600], ["05:34 5961 IN", "06:00 0000 IN", "06:34 0000 OUT", "07:59 5961 OUT",
-      "07:59 0148 IN", "18:59 0000 IN", "19:09 0148 OUT", "22:59 5961 IN", "23:00 5961 OUT"]))
