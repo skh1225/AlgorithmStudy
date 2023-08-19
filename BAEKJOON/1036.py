@@ -24,7 +24,7 @@ def calc(lst1, lst2):
                     break
 
 for _ in range(int(input())):
-    x = list(map(f,list(input().strip())))
+    x = list(map(f,list(input().strip().lstrip('0'))))
     calc(answer,x)
     l = len(x)
     for i in range(l):
@@ -48,4 +48,7 @@ for a in answer:
         continue
     result += F(a)
 
-print(result)
+if result:
+    print(result)
+else:
+    print('0')

@@ -34,7 +34,6 @@ def make_flow():
         curr = pre[curr]
     curr = 2
     while curr != 1:
-        print(curr)
         flow[pre[curr]][curr] += min_flow
         flow[curr][pre[curr]] -= min_flow
         if flow[pre[curr]][curr] == 0:

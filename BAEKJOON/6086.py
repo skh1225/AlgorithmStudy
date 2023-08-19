@@ -1,6 +1,6 @@
 import sys
 input = sys.stdin.readline
-
+from math import ceil
 INF = int(1e5)
 t = lambda x: ord(x)-ord('A') if x <= 'Z' else ord(x)-ord('a')+26
 
@@ -29,15 +29,13 @@ def make_flow():
     min_flow = INF
     curr = 25
     while curr != 0:
-        prev = visited[curr]
-        min_flow = min(min_flow, cap[prev][curr]-flow[prev][curr])
-        curr = prev
+        min_flow = min(min_flow, cap[visited[curr]][curr]-flow[visited[curr]][curr])
+        curr = visited[curr]
     curr = 25
     while curr != 0:
-        prev = visited[curr]
-        flow[prev][curr] += min_flow
-        flow[curr][prev] -= min_flow
-        curr = prev
+        flow[visited[curr]][curr] += min_flow
+        flow[curr][visited[curr]] -= min_flow
+        curr = visited[curr]
     return min_flow
 
 answer = 0
